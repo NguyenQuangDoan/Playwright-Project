@@ -30,9 +30,7 @@ export const test = baseTest.extend<AuthFixture>({
     expect(response.status()).toBe(200);
     const responseBody = await response.json();
     // Assuming we take the first booking id for testing
-    const allBoookings = responseBody;
-
-    const allIds = allBoookings.map((booking) => booking.bookingid);
+    const allIds = responseBody.map((booking) => booking.bookingid);
     const bookingId = Math.max(...allIds);
     await use(bookingId);
   },
