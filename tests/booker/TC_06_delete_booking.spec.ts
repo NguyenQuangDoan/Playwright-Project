@@ -1,6 +1,6 @@
 import { test, expect } from "./fixtures/auth.fixture";
 
-test("Update booking", async ({ request, token, bookingId }) => {
+test("Delete booking", async ({ request, token, bookingId }) => {
   
   const response = await request.delete(
     `https://restful-booker.herokuapp.com/booking/${bookingId}`,
