@@ -1,18 +1,6 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures/auth.fixture";
 
-test("Partial update booking", async ({ request }) => {
-  const authRes = await request.post(
-    "https://restful-booker.herokuapp.com/auth",
-    {
-      data: { username: "admin", password: "password123" },
-    }
-  );
-  const { token } = await authRes.json();
-
-  const allBookingRes = await request.get('https://restful-booker.herokuapp.com/booking');
-  const allBoookings = await allBookingRes.json();
-  const allIds = allBoookings.map(booking => booking.bookingid);
-  const newestId = Math.max(...allIds) 
+test("Partial update booking", async ({ request, token, bookingId }) => {
 
   const updatedBooking = {
     firstname: "Curl",
@@ -20,7 +8,7 @@ test("Partial update booking", async ({ request }) => {
   };
 
   const response = await request.patch(
-    `https://restful-booker.herokuapp.com/booking/${newestId}`,
+    `https://restful-booker.herokuapp.com/booking/${bookingId}`,
     {
       headers: {
         "Content-Type": "application/json",

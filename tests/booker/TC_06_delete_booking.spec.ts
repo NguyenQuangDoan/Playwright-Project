@@ -1,21 +1,9 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures/auth.fixture";
 
-test("Update booking", async ({ request }) => {
-  const authRes = await request.post(
-    "https://restful-booker.herokuapp.com/auth",
-    {
-      data: { username: "admin", password: "password123" },
-    }
-  );
-  const { token } = await authRes.json();
-
-  const allBookingRes = await request.get('https://restful-booker.herokuapp.com/booking');
-  const allBoookings = await allBookingRes.json();
-  const allIds = allBoookings.map(booking => booking.bookingid);
-  const newestId = Math.max(...allIds) 
-
+test("Update booking", async ({ request, token, bookingId }) => {
+  
   const response = await request.delete(
-    `https://restful-booker.herokuapp.com/booking/${newestId}`,
+    `https://restful-booker.herokuapp.com/booking/${bookingId}`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -26,7 +14,7 @@ test("Update booking", async ({ request }) => {
   expect(response.status()).toBe(201);
 
   const check = await request.get(
-    `https://restful-booker.herokuapp.com/booking/${newestId}`
+    `https://restful-booker.herokuapp.com/booking/${bookingId}`
   );
   expect(check.status()).toBe(404);
 });
