@@ -1,7 +1,7 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./fixtures/auth.fixture";
 import { z } from 'zod';
 
-test("Get booking ids", async ({ request }) => {
+test("Get booking ids", async ({ request}) => {
   const response = await request.get('https://restful-booker.herokuapp.com/booking')
     expect(response.status()).toBe(200);
     const responseBody = await response.json();
@@ -13,8 +13,8 @@ test("Get booking ids", async ({ request }) => {
     expect(() => bookingSchema.parse(responseBody)).not.toThrow();
 });
 
-test('Get booking by id', async ({ request }) => {
-    const response = await request.get('https://restful-booker.herokuapp.com/booking/1')
+test('Get booking by id', async ({ request, bookingId  }) => {
+    const response = await request.get(`https://restful-booker.herokuapp.com/booking/${bookingId}`)
     expect(response.status()).toBe(200);
     const responseBody = await response.json();
 
