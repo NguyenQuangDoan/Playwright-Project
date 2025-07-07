@@ -1,29 +1,23 @@
-import{test, expect} from '@playwright/test';
+import{test, expect} from './herokuFixtures/heroku.fixture';
 
-test("Able to capture the fullscreen", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/context_menu");
+test("Able to capture the fullscreen", async ({ captureScreenshotPage }) => {
+    await captureScreenshotPage.goto();
 
-    const timestamp = Date.now();
-    await page
-    .screenshot({ path: `screenshot_fullscreen${timestamp}.png`, fullPage: true });
+    await captureScreenshotPage.captureFullScreen();
 });
 
 
-test("Able to capture the viewport", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/context_menu");
+test("Able to capture the viewport", async ({ captureScreenshotPage }) => {
+    await captureScreenshotPage.goto();
 
-    const timestamp = Date.now();
-    await page
-    .screenshot({ path: `screenshot_viewport${timestamp}.png` });
+    await captureScreenshotPage.captureViewport();
 })
 
 
-test("Able to capture the specific element", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/context_menu");
+test("Able to capture the specific element", async ({ captureScreenshotPage }) => {
+     await captureScreenshotPage.goto();
 
-    const timestamp = Date.now();
-    const element = page.locator("#hot-spot");
-    await element.screenshot({ path: `screenshot_element${timestamp}.png` });
+    await captureScreenshotPage.captureElement();
 });
 
 

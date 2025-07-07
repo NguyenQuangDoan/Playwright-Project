@@ -1,29 +1,25 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './herokuFixtures/heroku.fixture';
 
-test("Able to add and remove element", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/add_remove_elements/");
+test("Able to add and remove element", async ({ addRemoveElementPage }) => {
+    await addRemoveElementPage.goto();
 
-    await page.getByRole('button', { name: 'Add Element' }).click();
-    await expect(page.getByRole('button', { name: '  Delete' })).toBeVisible();
+    await addRemoveElementPage.addElement();
+    await expect(await addRemoveElementPage.getDeleteButton()).toBeVisible();
 });
 
-test("Able to remove element", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/add_remove_elements/");
+test("Able to remove element", async ({ addRemoveElementPage }) => {
+    await addRemoveElementPage.goto();
 
-    await page.getByRole('button', { name: 'Add Element' }).click();
-    await expect(page.getByRole('button', { name: '  Delete' })).toBeVisible();
+    await addRemoveElementPage.addElement();
+    await expect(await addRemoveElementPage.getDeleteButton()).toBeVisible();
 
-    await page.getByRole('button', { name: '  Delete' }).click();
-    await expect(page.getByRole('button', { name: '  Delete' })).not.toBeVisible();
+    await addRemoveElementPage.removeElement();
+    await expect(await addRemoveElementPage.getDeleteButton()).not.toBeVisible();
 })
 
-test("Able to add multiple elements", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/add_remove_elements/");
+test("Able to add multiple elements", async ({ addRemoveElementPage }) => {
+    await addRemoveElementPage.goto();;
 
-    for (let i = 0; i < 5; i++) {
-        await page.getByRole('button', { name: 'Add Element' }).click();
-    }
-
-    const deleteButtons = page.locator('button').filter({ hasText: 'Delete' });
-    await expect(deleteButtons).toHaveCount(5);
+    const deleteButtons = addRemoveElementPage.addMultipleButtons(5);
+    await expect(await deleteButtons).toHaveCount(5);
 });

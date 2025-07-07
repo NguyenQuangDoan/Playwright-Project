@@ -1,11 +1,10 @@
-import{test, expect} from '@playwright/test';
+import { check } from 'zod/v4';
+import{test, expect} from './herokuFixtures/heroku.fixture';
+import { CheckboxPage } from './page/checkbox.page';
 
-test("able check checkbox", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/checkboxes");
+test("able check checkbox", async ({ checkboxPage }) => {
+    await checkboxPage.goto();
 
-    await page.locator("form#checkboxes input").nth(0).check();
-    await expect(page.getByRole('checkbox').first()).toBeChecked();
-    
-    await page.locator('input[type="checkbox"]').nth(1).check();
-    await expect(page.locator('input[type="checkbox"]').nth(1)).toBeChecked();
+    await checkboxPage.check(1);
+    await expect(checkboxPage.toBeChecked(1)).toBeTruthy();
 });

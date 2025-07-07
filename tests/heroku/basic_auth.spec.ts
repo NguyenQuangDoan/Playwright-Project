@@ -1,15 +1,8 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './herokuFixtures/heroku.fixture';
 
-test('Basic Auth login', async ({ browser }) => {
-    const context = await browser.newContext({
-        httpCredentials: {
-            username: 'admin',
-            password: 'admin',
-        },
-    });
+test('Basic Auth login', async ({ basicAuthPage }) => {
+    
+    await basicAuthPage.goto();
 
-    const page = await context.newPage();
-    await page.goto('https://the-internet.herokuapp.com/basic_auth');
-
-    await expect(page.locator('h3')).toHaveText('Basic Auth');
+    await expect(await basicAuthPage.heading()).toBe('Basic Auth');
 });
