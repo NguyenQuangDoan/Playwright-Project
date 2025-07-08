@@ -2,10 +2,11 @@ import { Page,Locator } from '@playwright/test';
 
 export class BasicAuthPage{
     readonly page: Page;
-    readonly checkbox: Locator;
+    readonly headingLocator: Locator;
 
     constructor(page: Page) {
         this.page = page;
+        this.headingLocator = page.locator('h3');
     }
 
     async goto() {
@@ -13,6 +14,6 @@ export class BasicAuthPage{
     }
 
     async heading() {
-        return this.page.locator('h3').textContent();
+        return this.headingLocator.textContent();
     }
 }

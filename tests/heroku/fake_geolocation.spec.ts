@@ -1,14 +1,16 @@
-import {test,expect} from '@playwright/test';
+import { test, expect } from "./herokuFixtures/heroku.fixture";
 
-test.use({
-    geolocation: { latitude: 37.7749, longitude: -122.4194 }, // San Francisco coordinates
-    permissions: ['geolocation'],
-});
+test("fake geolocation", async ({ fakeGeolocationPage }) => {
+  const latitude = 37.7749; // San Francisco
+  const longitude = -122.4194;
 
-test('fake geolocation', async ({page}) => {
-    await page.goto('https://the-internet.herokuapp.com/geolocation');
-    await page.getByRole('button', { name: 'Where am I?' }).click();
+  await fakeGeolocationPage.setGeoLocation(latitude, longitude);
 
-    await expect(page.locator('#lat-value')).toHaveText('37.7749');
-    await expect(page.locator('#long-value')).toHaveText('-122.4194');
+  await fakeGeolocationPage.goto();
+  await fakeGeolocationPage.clickButton();
+
+  await expect(await fakeGeolocationPage.getLatValue()).toHaveText("37.7749");
+  await expect(await fakeGeolocationPage.getLongValue()).toHaveText(
+    "-122.4194"
+  );
 });

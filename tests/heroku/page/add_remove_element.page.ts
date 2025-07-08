@@ -2,10 +2,15 @@ import { Page, Locator } from "@playwright/test";
 
 export class AddRemoveElementPage {
   readonly page: Page;
-  readonly checkbox: Locator;
+  readonly deleteButton: Locator;
+  readonly addButton: Locator;
+  readonly deleteButtons: Locator;
 
   constructor(page: Page) {
     this.page = page;
+    this.deleteButton = page.getByRole("button", { name: "Delete" });
+    this.addButton = page.getByRole("button", { name: "Add Element" });
+    this.deleteButtons = page.locator("button").filter({ hasText: "Delete" });
   }
 
   async goto() {
@@ -15,21 +20,21 @@ export class AddRemoveElementPage {
   }
 
   async addElement() {
-    await this.page.getByRole("button", { name: "Add Element" }).click();
+    await this.addButton.click();
   }
 
-  async getDeleteButton() {
-    return this.page.getByRole("button", { name: "Delete" });
+  getDeleteButton(): Locator {
+    return this.deleteButton;
   }
 
   async removeElement() {
-    return await this.page.getByRole("button", { name: "Delete" }).click();
+    return await this.deleteButton.click();
   }
 
   async addMultipleButtons(deleteButtonNumber: number) {
     for (let i = 0; i < deleteButtonNumber; i++) {
-      await this.page.getByRole("button", { name: "Add Element" }).click();
+      await this.addButton.click();
     }
-    return this.page.locator("button").filter({ hasText: "Delete" });
+    return this.deleteButtons;
   }
 }

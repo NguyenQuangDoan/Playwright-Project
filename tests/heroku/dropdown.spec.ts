@@ -1,21 +1,21 @@
-import{test, expect} from '@playwright/test';
+import{test, expect} from './herokuFixtures/heroku.fixture';
 
-test("Able select Option 1", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/dropdown");
+test("Able select Option 1", async ({ dropdownPage }) => {
+    await dropdownPage.goto();
 
-    await page.locator("#dropdown").selectOption({label: 'Option 1'});
-    await expect(page.locator("#dropdown")).toHaveValue('1');
+    await dropdownPage.selectOption();
+    await expect(await dropdownPage.dropdown()).toHaveValue('1');
 });
 
-test("Able select multiple options", async ({ page }) => {
-    await page.goto("https://output.jsbin.com/osebed/2");
+test("Able select multiple options", async ({ dropdownPage }) => {
+    await dropdownPage.gotoMultipleOptions();
 
-    await page.locator("#fruits").selectOption(['banana','apple', 'orange', 'grape']);
-    await expect(page.locator("#fruits")).toHaveValues(['banana','apple', 'orange', 'grape']);
+    await dropdownPage.selectMultipleOptions(['banana','apple', 'orange', 'grape']);
+    await expect(await dropdownPage.fruitsDropdown()).toHaveValues(['banana','apple', 'orange', 'grape']);
 });
 
-test("Deselected all options", async ({ page }) => {
-    await page.goto("https://output.jsbin.com/osebed/2");
-    await page.locator("#fruits").selectOption([]);
-    await expect(page.locator("#fruits")).toHaveValues([])
+test("Deselected all options", async ({ dropdownPage }) => {
+    await dropdownPage.gotoMultipleOptions();
+    await dropdownPage.deselectAllOptions();
+    await expect(await dropdownPage.fruitsDropdown()).toHaveValues([])
 });

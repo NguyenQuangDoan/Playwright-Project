@@ -1,25 +1,22 @@
-import { test, expect } from "@playwright/test";
+import { test, expect } from "./herokuFixtures/heroku.fixture";
 
-test("verify broken image", async ({ page }) => {
-  await page.goto("https://the-internet.herokuapp.com/broken_images");
-
-  const images = page.locator("img");
+test("verify broken image", async ({ handleBrokenImagePage }) => {
+  await handleBrokenImagePage.goto();
 
   // Check if the image is present
-  const allImages = await images.all();
+  const allImages = await handleBrokenImagePage.getAllImages();
 
   for (const image of allImages) {
-    const imgSrc = await image.getAttribute("src");
+    const imgSrc = await handleBrokenImagePage.getImageSrc(image);
     expect(imgSrc?.length).toBeGreaterThan(1);
-    const res = await page.request.get(
-      "https://the-internet.herokuapp.com/" + imgSrc
-    );
-    if (res.status() !== 200) {
-      console.error(
-        `❌ Broken image detected: ${imgSrc} → Status: ${res.status()}`
-      );
-    } else {
-      console.log(`✅ Image is valid: ${imgSrc} → Status: ${res.status()}`);
+
+    if (imgSrc) {
+      const { status, url } = await handleBrokenImagePage.checkImageStatus(imgSrc);
+      if (status !== 200) {
+        console.error(`❌ Broken image detected: ${url} → Status: ${status}`);
+      } else {
+        console.log(`✅ Image is valid: ${url} → Status: ${status}`);
+      }
     }
   }
 });

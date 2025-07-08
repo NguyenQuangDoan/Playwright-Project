@@ -1,8 +1,8 @@
-import{test, expect} from '@playwright/test';
+import{test, expect} from './herokuFixtures/heroku.fixture';
 
-test("Able to drag and drop an element", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/drag_and_drop");
+test("Able to drag and drop an element", async ({ dragAndDropPage }) => {
+    await dragAndDropPage.goto();
 
-    await page.locator('#column-a').dragTo(page.locator('#column-b'));
-    await expect(page.locator('#column-b header')).toHaveText('A');
+    await dragAndDropPage.dragAndDropElement();
+    await expect(await dragAndDropPage.columnBHeader()).toHaveText('A');
 });

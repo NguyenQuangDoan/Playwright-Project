@@ -1,36 +1,25 @@
-import {test, expect} from '@playwright/test';
+import {test, expect} from './herokuFixtures/heroku.fixture';
 import * as fs from 'fs';
 
-test('download a file', async ({page}) => {
-    await page.goto('https://the-internet.herokuapp.com/download');
-    const [download] = await Promise.all([
-        page.waitForEvent('download'),
-        page.getByRole('link', { name: 'Jpeg_with_exif.jpeg' }).click(),
-    ]);
+test('download a file', async ({downloadFilePage}) => {
+    await downloadFilePage.goto();
+    const downloadFile = await downloadFilePage.downloadJpegFile();
     
-    const suggestedFilename = download.suggestedFilename();
+    const suggestedFilename = downloadFile.suggestedFilename();
     expect(suggestedFilename).toBe('Jpeg_with_exif.jpeg');
-    
-    const filePath = 'download/'+suggestedFilename;
-    await download.saveAs(filePath);
+
+    const filePath = await downloadFilePage.saveDownloadedFile(downloadFile, 'download');
     expect(fs.existsSync(filePath)).toBeTruthy();
 });
 
-test('download multiple files', async ({page}) => {
-    await page.goto('https://the-internet.herokuapp.com/download');
+test('download multiple files', async ({downloadFilePage}) => {
+    await downloadFilePage.goto();
     const fileNames = ["demo.txt","bb.txt"];
     
-   for (const fileName of fileNames) {
-        const [download] = await Promise.all([
-            page.waitForEvent('download'),
-            page.getByRole('link', { name: fileName }).first().click(),
-        ]);
-        
-        const suggestedFilename = download.suggestedFilename();
-        expect(suggestedFilename).toBe(fileName);
-        
-        const filePath = 'download/'+suggestedFilename;
-        await download.saveAs(filePath);
-        expect(fs.existsSync(filePath)).toBeTruthy();
+    const filePaths = await downloadFilePage.downloadMultipleFiles(fileNames, 'download');
+
+    for(let i = 0; i < fileNames.length; i++) {
+        expect(filePaths[i]).toContain(fileNames[i]);
+        expect(fs.existsSync(filePaths[i])).toBeTruthy();
     }
 });

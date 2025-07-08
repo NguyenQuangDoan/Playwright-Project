@@ -1,11 +1,11 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './herokuFixtures/heroku.fixture';
 
-test('Modal appear after move out mouse form viewport', async ({ page }) => {
-    await page.goto('https://the-internet.herokuapp.com/exit_intent');
+test('Modal appear after move out mouse form viewport', async ({ exitIntentPage }) => {
+    await exitIntentPage.goto();
 
-    await page.mouse.move(400, 400);
+    await exitIntentPage.moveMouseToCenter();
 
-    await page.mouse.move(600, -10);
+    await exitIntentPage.moveMouseOutScreen();
 
-    await expect(page.locator('.modal')).toBeVisible();
+    await expect(await exitIntentPage.getModal()).toBeVisible();
 });

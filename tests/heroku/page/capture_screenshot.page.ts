@@ -2,10 +2,11 @@ import { Page,Locator } from '@playwright/test';
 
 export class CaptureScreenshotPage {
     readonly page: Page;
-    readonly checkbox: Locator;
+    readonly hotSpot: Locator;
 
     constructor(page: Page) {
         this.page = page;
+        this.hotSpot = page.locator("#hot-spot");
     }
 
     async goto() {
@@ -24,7 +25,7 @@ export class CaptureScreenshotPage {
 
     async captureElement() {
         const timestamp = Date.now();
-        const element = this.page.locator("#hot-spot");
+        const element = this.hotSpot;
         await element.screenshot({ path: `screenshot_element${timestamp}.png` });
     }
 }
