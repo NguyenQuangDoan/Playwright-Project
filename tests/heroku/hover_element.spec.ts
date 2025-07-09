@@ -1,11 +1,11 @@
-import{test, expect} from '@playwright/test';
+import{test, expect} from './herokuFixtures/heroku.fixture';
 
-test("Able to hover the elememt", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/hovers");
+test("Able to hover the elememt", async ({ hoverElementPage }) => {
+    await hoverElementPage.goto();
 
-    await page.getByRole("img", {name: "User Avatar"}).nth(0).hover();
-    await expect(page.getByText("name: user1")).toBeVisible();
+    await hoverElementPage.hoverImage(0);
+    await expect(await hoverElementPage.avatarText).toBeVisible();
     
-    await page.locator(".figcaption a").nth(0).click();
-    await expect(page).toHaveURL(/users\/1/);
+    await hoverElementPage.link.nth(0).click();
+    await expect(await hoverElementPage.getCurrentUrl()).toMatch(/users\/1/);
 });

@@ -1,13 +1,12 @@
-import {test,expect} from '@playwright/test';
+import {test,expect} from './herokuFixtures/heroku.fixture';
 
-test('Verify Hello World displayed after click Start', async ({page}) => {
-    await page.goto('https://the-internet.herokuapp.com/dynamic_loading/1');
+test('Verify Hello World displayed after click Start', async ({handleDynamicLoadingPage}) => {
+    await handleDynamicLoadingPage.goto();
     
-    await page.getByRole('button', { name: 'Start' })
-    .click();
+    await handleDynamicLoadingPage.clickButton();
 
-    await page.waitForSelector('#finish', { state: 'visible' });
+    await handleDynamicLoadingPage.waitForFinishDisplay();
     
-    await expect(page.getByRole('heading', { name: 'Hello World!' }))
+    await expect(await handleDynamicLoadingPage.getHeadingText())
     .toBeVisible();
 });

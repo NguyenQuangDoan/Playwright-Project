@@ -11,6 +11,11 @@ import { entryAdPage } from "../page/entry_ad.page";
 import { exitIntentPage } from "../page/exit_intent.page";
 import { fakeGeoLocationPage } from "../page/fake_geolocation.page";
 import {handleBrokenImagePage} from "../page/handle_broken_img.page";
+import { handleDynamicLoadingPage } from "../page/handle_dynamic_loading.page";
+import {horizontalSliderPage} from "../page/horizontal_slider.page";
+import { hoverElementPage } from "../page/hover_element.page";
+import {hyperlinkPage} from "../page/hyperlink.page";
+import {infiniteScrollPage} from "../page/infinite_scroll.page";
 
 type MyFixtures = {
   loginPage: LoginPage;
@@ -25,6 +30,11 @@ type MyFixtures = {
   exitIntentPage: exitIntentPage;
   fakeGeolocationPage: fakeGeoLocationPage;
   handleBrokenImagePage: handleBrokenImagePage;
+  handleDynamicLoadingPage: handleDynamicLoadingPage;
+  horizontalSliderPage: horizontalSliderPage;
+  hoverElementPage: hoverElementPage;
+  hyperlinkPage: hyperlinkPage;
+  infiniteScrollPage: infiniteScrollPage;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -73,6 +83,21 @@ export const test = base.extend<MyFixtures>({
   },
   handleBrokenImagePage: async ({ page }, use) => {
     await use(new handleBrokenImagePage(page));
+  },
+  handleDynamicLoadingPage: async ({ page }, use) => {
+    await use(new handleDynamicLoadingPage(page));
+  },
+  horizontalSliderPage: async ({ page }, use) => {
+    await use(new horizontalSliderPage(page));
+  },
+  hoverElementPage: async ({ page }, use) => {
+    await use(new hoverElementPage(page));
+  },
+  hyperlinkPage: async ({ page }, use) => {
+    await use(new hyperlinkPage(page));
+  },
+  infiniteScrollPage: async ({ page }, use) => {
+    await use(new infiniteScrollPage(page));
   },
 });
 

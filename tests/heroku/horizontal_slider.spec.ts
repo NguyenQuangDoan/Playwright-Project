@@ -1,29 +1,16 @@
-import{test, expect} from '@playwright/test';
+import{test, expect} from './herokuFixtures/heroku.fixture';
 
-test("Able to move slider to the right", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/horizontal_slider");
+test("Able to move slider to the right", async ({ horizontalSliderPage }) => {
+    await horizontalSliderPage.goto();
 
-    await page.getByRole("slider").fill("5");
-    await expect(page.locator("#range")).toHaveText("5");
+    await horizontalSliderPage.dragSliderToPoint("5");
+    await expect(await horizontalSliderPage.reaching).toHaveText("5");
 });
 
 
-test("Able to move slider to the middle", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/horizontal_slider");
+test("Able to move slider to the middle", async ({ horizontalSliderPage }) => {
+    await horizontalSliderPage.goto();
 
-    await page.getByRole("slider").fill("2.5");
-    await expect(page.locator("#range")).toHaveText("2.5");
+    await horizontalSliderPage.dragSliderToPoint("2.5");
+    await expect(await horizontalSliderPage.reaching).toHaveText("2.5");
 })
-
-test("Able to move slider to the right by evaluate", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/horizontal_slider");
-
-    await page.evaluate(() => {
-        const slider = document.querySelector("input[type='range']") as HTMLInputElement;
-        slider.value = "5";
-        slider.dispatchEvent(new Event('input'));
-        slider.dispatchEvent(new Event('change'));
-    });
-
-    await expect(page.locator("#range")).toHaveText("5");
-});

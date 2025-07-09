@@ -1,24 +1,21 @@
-import{test, expect} from '@playwright/test';
+import{test, expect} from './herokuFixtures/heroku.fixture';
 
-test("Able to click on hyperlink and get back", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/status_codes");
+test("Able to click on hyperlink and get back", async ({ hyperlinkPage }) => {
+    await hyperlinkPage.goto();
 
-    await page.getByRole("link", {name: "200"}).click();
-    await expect(page).toHaveURL(/status_codes\/200/);
-    await page.getByRole("link", {name: "here"}).click();
+    await hyperlinkPage.clickLink200();
+    await expect(await hyperlinkPage.getCurrentUrl()).toMatch(/status_codes\/200/);
+    await hyperlinkPage.clickLinkHere();
 
-    await page.getByRole("listitem")
-        .filter({ hasText: '301' })
-        .getByRole('link')
-        .click();
-    await expect(page).toHaveURL(/status_codes\/301/);
-    await page.goBack();
+    await hyperlinkPage.clickLink301();
+    await expect(await hyperlinkPage.getCurrentUrl()).toMatch(/status_codes\/301/);
+    await hyperlinkPage.goBack();
 
-    await page.getByRole("link", {name: "404"}).click();
-    await expect(page).toHaveURL(/status_codes\/404/);
-    await page.getByRole("link", {name: "here"}).click();
+    await hyperlinkPage.clickLink404();
+    await expect(await hyperlinkPage.getCurrentUrl()).toMatch(/status_codes\/404/);
+    await hyperlinkPage.clickLinkHere();
 
-    await page.getByRole("link", {name: "500"}).click();
-    await expect(page).toHaveURL(/status_codes\/500/);
-    await page.getByRole("link", {name: "here"}).click();
+    await hyperlinkPage.clickLink500();
+    await expect(await hyperlinkPage.getCurrentUrl()).toMatch(/status_codes\/500/);
+    await hyperlinkPage.clickLinkHere();
 });

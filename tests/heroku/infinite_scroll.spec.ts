@@ -1,13 +1,10 @@
-import {test, expect} from '@playwright/test';
+import {test, expect} from './herokuFixtures/heroku.fixture';
 
-test('infinite scroll', async ({page}) => {
-    await page.goto("https://the-internet.herokuapp.com//infinite_scroll");
-    for (let i = 0; i < 10; i++) {
-        await page.mouse.wheel(0, 1000); // Scroll down to trigger loading of more items
-        await page.waitForTimeout(1000); // Wait for items to load
-    }
-    await page.getByText('Powered by Elemental Selenium').scrollIntoViewIfNeeded();
+test('infinite scroll', async ({infiniteScrollPage}) => {
+    await infiniteScrollPage.goto();
+    await infiniteScrollPage.scrollMouseLoadMore();
+    await infiniteScrollPage.scrollIntoViewNeeded();
 
-    await expect(page.getByText('Powered by Elemental Selenium')).toBeVisible();
+    await expect(await infiniteScrollPage.getTargetText()).toBeVisible();
 
 });
