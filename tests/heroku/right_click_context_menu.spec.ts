@@ -1,12 +1,9 @@
-import{test, expect} from '@playwright/test';
+import{test} from './herokuFixtures/heroku.fixture';
 
-test("Able to right click - context menu", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/context_menu");
+test("Able to right click - context menu", async ({ rightClickContextMenuPage }) => {
+    await rightClickContextMenuPage.goto();
 
-    await page.locator("#hot-spot").click({button: "right"});
+    await rightClickContextMenuPage.rightClick();
 
-    page.on("dialog", async (dialog) => {
-    expect(dialog.message()).toBe("You selected a context menu");
-    await dialog.accept();
-  });
+    await rightClickContextMenuPage.verifyMessageOnDialog("You selected a context menu");
 });

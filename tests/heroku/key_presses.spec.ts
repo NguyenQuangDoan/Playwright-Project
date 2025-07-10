@@ -1,15 +1,13 @@
-import{test, expect} from '@playwright/test';
+import{test, expect} from './herokuFixtures/heroku.fixture';
 
-test("Able to press key from keyboard", async ({ page }) => {
-    await page.goto("https://the-internet.herokuapp.com/key_presses");
+test("Able to press key from keyboard", async ({ keyPressPage }) => {
+    await keyPressPage.goto();
 
-    const input = page.locator("#target");
+  await keyPressPage.clickOnField();
+  await keyPressPage.keyPress("Escape");
+  await keyPressPage.verifyKeyPress("You entered: ESCAPE");
 
-  await input.click();
-  await input.press("Escape");
-  await expect(page.locator("#result")).toHaveText("You entered: ESCAPE");
-
-  await input.click();
-  await input.press("Tab");
-  await expect(page.locator("#result")).toHaveText("You entered: TAB");
+  await keyPressPage.clickOnField();
+  await keyPressPage.keyPress("Tab");
+  await keyPressPage.verifyKeyPress("You entered: TAB");
 });

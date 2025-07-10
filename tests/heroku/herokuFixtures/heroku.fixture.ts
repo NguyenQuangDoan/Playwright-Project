@@ -16,6 +16,13 @@ import {horizontalSliderPage} from "../page/horizontal_slider.page";
 import { hoverElementPage } from "../page/hover_element.page";
 import {hyperlinkPage} from "../page/hyperlink.page";
 import {infiniteScrollPage} from "../page/infinite_scroll.page";
+import {jsAlertPage} from "../page/js_alert.page";
+import {keyPressPage} from "../page/key_press.page";
+import { nestedFramesPage } from "../page/nest_frames.page";
+import { rightClickContextMenuPage } from "../page/right_click_context_menu.page";
+import  {uploadFilePage} from "../page/upload_file.page";
+import { webTablePage } from "../page/web_table.page";
+
 
 type MyFixtures = {
   loginPage: LoginPage;
@@ -35,6 +42,12 @@ type MyFixtures = {
   hoverElementPage: hoverElementPage;
   hyperlinkPage: hyperlinkPage;
   infiniteScrollPage: infiniteScrollPage;
+  jsAlertPage: jsAlertPage;
+  keyPressPage: keyPressPage;
+  nestedFramesPage: nestedFramesPage;
+  rightClickContextMenuPage: rightClickContextMenuPage;
+  uploadFilePage: uploadFilePage;
+  webTablePage: webTablePage;
 };
 
 export const test = base.extend<MyFixtures>({
@@ -98,6 +111,24 @@ export const test = base.extend<MyFixtures>({
   },
   infiniteScrollPage: async ({ page }, use) => {
     await use(new infiniteScrollPage(page));
+  },
+  jsAlertPage: async ({ page }, use) => {
+    await use(new jsAlertPage(page));
+  },
+  keyPressPage: async ({ page }, use) => {
+    await use(new keyPressPage(page));
+  },
+  nestedFramesPage: async ({ page }, use) => {
+    await use(new nestedFramesPage(page));
+  },
+  rightClickContextMenuPage: async ({ page }, use) => {
+    await use(new rightClickContextMenuPage(page));
+  },
+  uploadFilePage: async ({ page }, use) => {
+    await use(new uploadFilePage(page));
+  },
+  webTablePage: async ({ page }, use) => {
+    await use(new webTablePage(page));
   },
 });
 

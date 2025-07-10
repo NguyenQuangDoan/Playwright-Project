@@ -1,11 +1,11 @@
-import {test, expect} from '@playwright/test';
+import {test, expect} from './herokuFixtures/heroku.fixture';
 
-test('upload a file', async ({page}) => {
-    await page.goto('https://the-internet.herokuapp.com/upload');
+test('upload a file', async ({uploadFilePage}) => {
+    await uploadFilePage.goto();
     
     const filePath = 'upload-files/demo.txt';
-    await page.setInputFiles('input[type="file"]', filePath);
+    await uploadFilePage.setInputFiles(filePath);
     
-    await page.getByRole('button', { name: 'Upload' }).click();
-    await expect(page.locator('#uploaded-files')).toContainText('demo.txt');
+    await uploadFilePage.clickUploadButton();
+    await uploadFilePage.verifyUploadedFile('demo.txt');
 });
