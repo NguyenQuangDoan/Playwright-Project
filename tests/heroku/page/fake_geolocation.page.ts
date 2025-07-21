@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 
-export class fakeGeoLocationPage {
+export class FakeGeoLocationPage {
   readonly page: Page;
   readonly button: Locator;
   readonly latValue: Locator;

@@ -1,4 +1,5 @@
 import { test, expect } from "./herokuFixtures/heroku.fixture";
+import { HttpUtils } from "./api/httpUtils";
 
 test("verify broken image", async ({ handleBrokenImagePage }) => {
   await handleBrokenImagePage.goto();
@@ -11,7 +12,7 @@ test("verify broken image", async ({ handleBrokenImagePage }) => {
     expect(imgSrc?.length).toBeGreaterThan(1);
 
     if (imgSrc) {
-      const { status, url } = await handleBrokenImagePage.checkImageStatus(imgSrc);
+      const { status, url } = await HttpUtils.checkImageStatus(imgSrc);
       if (status !== 200) {
         console.error(`❌ Broken image detected: ${url} → Status: ${status}`);
       } else {

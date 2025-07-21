@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 
-export class hyperlinkPage {
+export class HyperlinkPage {
   readonly page: Page;
     readonly link200: Locator;
     readonly link301: Locator;

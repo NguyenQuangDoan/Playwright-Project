@@ -1,8 +1,10 @@
 import { test, expect } from "./herokuFixtures/heroku.fixture";
 
-test("JS Alert", async ({ jsAlertPage }) => {
+test.beforeEach(async ({ jsAlertPage }) => {
   await jsAlertPage.goto();
+});
 
+test("JS Alert", async ({ jsAlertPage }) => {
   await jsAlertPage.clickOnButton("Click for JS Alert");
 
   await jsAlertPage.acceptDialog("I am a JS Alert");
@@ -13,8 +15,6 @@ test("JS Alert", async ({ jsAlertPage }) => {
 });
 
 test("JS Confirm OK", async ({ jsAlertPage }) => {
-  await jsAlertPage.goto();
-
   await jsAlertPage.acceptDialog("I am a JS Confirm");
 
   await jsAlertPage.clickOnButton("Click for JS Confirm");
@@ -25,8 +25,6 @@ test("JS Confirm OK", async ({ jsAlertPage }) => {
 });
 
 test("JS Confirm Cancel", async ({ jsAlertPage }) => {
-  await jsAlertPage.goto();
-
   await jsAlertPage.dismissDialog("I am a JS Confirm");
 
   await jsAlertPage.clickOnButton("Click for JS Confirm");
@@ -37,8 +35,6 @@ test("JS Confirm Cancel", async ({ jsAlertPage }) => {
 });
 
 test("js prompt ", async ({ jsAlertPage }) => {
-  await jsAlertPage.goto();
-
   await jsAlertPage.acceptPrompt("I am a JS prompt", "Hello World/n");
 
   await jsAlertPage.clickOnButton("Click for JS Prompt");

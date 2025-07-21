@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 
-export class handleDynamicLoadingPage {
+export class HandleDynamicLoadingPage {
   readonly page: Page;
   readonly button: Locator;
   readonly heading: Locator;

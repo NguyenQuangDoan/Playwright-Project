@@ -1,35 +1,36 @@
-import { Page, Locator,FrameLocator, expect } from "@playwright/test";
+import { Page, Locator, FrameLocator, expect } from "@playwright/test";
 
-export class nestedFramesPage {
+export class NestedFramesPage {
   readonly page: Page;
-  readonly topFrame: FrameLocator;
-  readonly bottomFrame: FrameLocator;
+  static FRAME_TOP = "[name='frame-top']";
+  static FRAME_LEFT = 'frame[name="frame-left"]';
+  static FRAME_MIDDLE = 'frame[name="frame-middle"]';
+  static FRAME_RIGHT = 'frame[name="frame-right"]';
+  static FRAMES_ON_TOP = [
+    { selector: this.FRAME_LEFT, expectedText: "LEFT" },
+    { selector: this.FRAME_MIDDLE, expectedText: "MIDDLE" },
+    { selector: this.FRAME_RIGHT, expectedText: "RIGHT" },
+  ];
+  static FRAME_BOTTOM = "[name='frame-bottom']";
 
   constructor(page: Page) {
     this.page = page;
-    this.topFrame = page.frameLocator("[name='frame-top']");
-    this.bottomFrame = page.frameLocator("[name='frame-bottom']");
   }
 
   async goto() {
-    await this.page.goto(
-      "https://the-internet.herokuapp.com/nested_frames"
-    );
+    await this.page.goto("https://the-internet.herokuapp.com/nested_frames");
   }
 
-  async getFrameOnTop(name: string): Promise<Locator> {
-    return this.topFrame.frameLocator(name).locator('body');
+  async getFrameTextOnTop(childFrameSelector) {
+    const topFrame = this.page.frameLocator(NestedFramesPage.FRAME_TOP);
+    const childFrame = topFrame.locator(childFrameSelector);
+    const text = await childFrame.contentFrame().locator('body').textContent();
+    return text ? text.trim() : '';
   }
 
-  async verifyFrameTextOnTop(name: string, text: string) {
-    await expect(await this.getFrameOnTop(name)).toHaveText(text);
+  async getFrameTextOnBottom() {
+    const bottomFrame = this.page.frameLocator(NestedFramesPage.FRAME_BOTTOM);
+    const text = await bottomFrame.locator('body').textContent();
+    return text ? text.trim() : '';
   }
-
-  async getFrameOnBottom(): Promise<Locator> {
-    return this.bottomFrame?.locator('body')
-  }
-
-    async verifyFrameTextOnBottom(text: string) {
-        await expect(await this.getFrameOnBottom()).toHaveText(text);
-    }
 }

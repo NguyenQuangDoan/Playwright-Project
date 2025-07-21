@@ -1,6 +1,6 @@
 import { Page,Locator } from '@playwright/test';
 
-export class dragAndDropPage {
+export class DragAndDropPage {
     readonly page: Page;
     readonly columnB: Locator;
     readonly columnA: Locator;

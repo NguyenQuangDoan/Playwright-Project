@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 
-export class entryAdPage {
+export class EntryAdPage {
   readonly page: Page;
   readonly modal: Locator;
   readonly closeButton: Locator;

@@ -1,18 +1,14 @@
-import{test, expect} from './herokuFixtures/heroku.fixture';
-
+import { test, expect } from "./herokuFixtures/heroku.fixture";
+import { NestedFramesPage } from "./page/nest_frames.page";
 
 test("Validate largest due person from table", async ({ nestedFramesPage }) => {
-    await nestedFramesPage.goto();
+  await nestedFramesPage.goto();
 
-    await nestedFramesPage.getFrameOnTop("[name='frame-left']");
-    await nestedFramesPage.verifyFrameTextOnTop("[name='frame-left']", 'LEFT');
+  for (const frame of NestedFramesPage.FRAMES_ON_TOP) {
+    const text = await nestedFramesPage.getFrameTextOnTop(frame.selector);
+    expect(text).toBe(frame.expectedText);
+  }
 
-    await nestedFramesPage.getFrameOnTop("[name='frame-middle']");
-    await nestedFramesPage.verifyFrameTextOnTop("[name='frame-middle']", 'MIDDLE');
-
-    await nestedFramesPage.getFrameOnTop("[name='frame-right']");
-    await nestedFramesPage.verifyFrameTextOnTop("[name='frame-right']", 'RIGHT');
-
-    await nestedFramesPage.getFrameOnBottom();
-    await nestedFramesPage.verifyFrameTextOnBottom('BOTTOM');
+  const bottomText = await nestedFramesPage.getFrameTextOnBottom();
+  expect(bottomText).toBe("BOTTOM");
 });

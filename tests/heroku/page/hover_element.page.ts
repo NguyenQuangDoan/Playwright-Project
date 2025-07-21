@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 
-export class hoverElementPage {
+export class HoverElementPage {
   readonly page: Page;
   readonly avatarImage: Locator;
   readonly avatarText: Locator;

@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 
-export class rightClickContextMenuPage {
+export class RightClickContextMenuPage {
   readonly page: Page;
   readonly contextMenuFrame: Locator;
 

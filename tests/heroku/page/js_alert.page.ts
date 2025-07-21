@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 
-export class jsAlertPage {
+export class JsAlertPage {
   readonly page: Page;
 
   constructor(page: Page) {

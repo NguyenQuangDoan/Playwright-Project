@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 
-export class horizontalSliderPage {
+export class HorizontalSliderPage {
   readonly page: Page;
   readonly slider: Locator;
   readonly reaching: Locator;

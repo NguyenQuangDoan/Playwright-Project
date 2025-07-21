@@ -1,13 +1,13 @@
 import { Page, Locator, Download } from "@playwright/test";
 import * as fs from 'fs';
 
-export class downloadFilePage {
+export class DownloadFilePage {
   readonly page: Page;
   readonly downloadLink: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.downloadLink = page.getByRole('link', { name: 'Jpeg_with_exif.jpeg' });
+    this.downloadLink = page.getByRole('link', { name: 'abdelghaffar.jpeg' });
   }
 
   async goto() {
@@ -44,4 +44,9 @@ export class downloadFilePage {
 
     return filePaths;
   }
+
+  async verifyFileDownloadExists(timestamp) {
+      const fileName = `screenshot_fullscreen${timestamp}.png`;
+      return fs.existsSync(fileName);
+    }
 }

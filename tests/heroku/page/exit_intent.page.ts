@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 
-export class exitIntentPage {
+export class ExitIntentPage {
   readonly page: Page;
   readonly modal: Locator;
 

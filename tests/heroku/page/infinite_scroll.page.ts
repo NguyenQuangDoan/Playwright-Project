@@ -1,6 +1,6 @@
 import { Page, Locator } from "@playwright/test";
 
-export class infiniteScrollPage {
+export class InfiniteScrollPage {
   readonly page: Page;
   readonly targetText: Locator;
 

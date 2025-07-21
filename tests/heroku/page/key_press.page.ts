@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 
-export class keyPressPage {
+export class KeyPressPage {
   readonly page: Page;
   readonly fieldInput: Locator;
   readonly resultText: Locator;

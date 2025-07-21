@@ -1,6 +1,6 @@
 import { Page,Locator } from '@playwright/test';
 
-export class dropdownPage {
+export class DropdownPage {
     readonly page: Page;
     readonly dropdownLocator: Locator;
     readonly fruitsDropdownLocator: Locator;

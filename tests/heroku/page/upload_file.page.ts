@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from "@playwright/test";
 
-export class uploadFilePage {
+export class UploadFilePage {
   readonly page: Page;
   readonly buttonUpload: Locator;
 
