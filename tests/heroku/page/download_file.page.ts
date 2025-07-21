@@ -7,7 +7,7 @@ export class DownloadFilePage {
 
   constructor(page: Page) {
     this.page = page;
-    this.downloadLink = page.getByRole('link', { name: 'abdelghaffar.jpeg' });
+    this.downloadLink = page.getByRole('link', { name: 'selenium-snapshot.png' });
   }
 
   async goto() {

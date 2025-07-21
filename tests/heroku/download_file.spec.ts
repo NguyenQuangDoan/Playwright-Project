@@ -7,7 +7,7 @@ test.beforeEach(async ({ downloadFilePage }) => {
 
 test("download a file", async ({ downloadFilePage }) => {
   const downloadFile = await downloadFilePage.downloadJpegFile();
-  expect(downloadFile.suggestedFilename()).toBe("abdelghaffar.jpeg");
+  expect(downloadFile.suggestedFilename()).toBe("selenium-snapshot.png");
   const filePath = await downloadFilePage.saveDownloadedFile(
     downloadFile,
     "download"
@@ -16,7 +16,7 @@ test("download a file", async ({ downloadFilePage }) => {
 });
 
 test("download multiple files", async ({ downloadFilePage }) => {
-  const fileNames = ["dummy.txt", "some-file.txt"];
+  const fileNames = ["Test2.xlsx", "art3.png"];
 
   const filePaths = await downloadFilePage.downloadMultipleFiles(
     fileNames,
